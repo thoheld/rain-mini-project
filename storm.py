@@ -35,14 +35,14 @@ def main(stdscr):
 			
 		# update all drops
 		for drop in drops:
-			if (drop.y == height + 17):
+			if (drop.y == height + 23):
 				drop.reset()
 			drop.update_drop(stdscr, char_matrix)
 		stdscr.refresh()
 
 		# delay
 		key = stdscr.getch() # quit?
-		time.sleep(.05)
+		time.sleep(.075)
 
 		# move all drops
 		for drop in drops:
@@ -89,12 +89,26 @@ class Drop:
 		# add new head
 		if (self.y < Drop.screen_height and self.y >= 0): 
 			stdscr.addch(self.y, self.x, char_matrix[self.y][self.x], curses.color_pair(15))
-		# update last head
+		
+		# section 2 (45)
 		if (self.y-1 < Drop.screen_height and self.y-1 >= 0): 
 			stdscr.addch(self.y-1, self.x, char_matrix[self.y-1][self.x], curses.color_pair(45))
+		
+		# section 3
+		if (self.y-3 < Drop.screen_height and self.y-3 >= 0): 
+			stdscr.addch(self.y-3, self.x, char_matrix[self.y-3][self.x], curses.color_pair(33))
+		
+		# section 3
+		if (self.y-7 < Drop.screen_height and self.y-7 >= 0): 
+			stdscr.addch(self.y-7, self.x, char_matrix[self.y-7][self.x], curses.color_pair(27))
+	
+		# section 4
+		if (self.y-15 < Drop.screen_height and self.y-15 >= 0): 
+			stdscr.addch(self.y-15, self.x, char_matrix[self.y-15][self.x], curses.color_pair(20))
+		
 		# erase end of tail
-		if (self.y-17 < Drop.screen_height and self.y-17 >= 0):
-			stdscr.addch(self.y-17, self.x, char_matrix[self.y-17][self.x], curses.color_pair(16))
+		if (self.y-23 < Drop.screen_height and self.y-23 >= 0):
+			stdscr.addch(self.y-23, self.x, char_matrix[self.y-23][self.x], curses.color_pair(16))
 		
 
 
