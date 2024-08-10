@@ -118,17 +118,26 @@ class Drop:
 			self.color_printer(stdscr, char_matrix, [15, 226, 214, 166, 9, 16])
 
 		elif (self.colorscheme == "green"):
-			self.color_printer(stdscr, char_matrix, [15, 46, 2, 34, 22, 16])	
+			self.color_printer(stdscr, char_matrix, [15, 46, 2, 34, 22, 16])
 		
 		elif (self.colorscheme == "grey" or self.colorscheme == "gray"):
-			self.color_printer(stdscr, char_matrix, [15, 252, 245, 241, 237, 16])	
+			self.color_printer(stdscr, char_matrix, [15, 252, 245, 241, 237, 16])
 		
 		elif (self.colorscheme == "rainbow"):
-			self.color_printer(stdscr, char_matrix, [196, 9, 226, 46, 21, 16])	
+			self.color_printer(stdscr, char_matrix, [196, 9, 226, 46, 21, 16])
 		
 		elif (self.colorscheme == "rose"):
-			self.color_printer(stdscr, char_matrix, [15, 13, 201, 199, 89, 16])	
-	
+			self.color_printer(stdscr, char_matrix, [15, 13, 201, 199, 89, 16])
+		
+		elif (self.colorscheme == "pinklemonade"):
+			self.color_printer(stdscr, char_matrix, [15, 207, 219, 217, 220, 16])
+		
+		elif (self.colorscheme == "nebula"):
+			self.color_printer(stdscr, char_matrix, [15, 49, 39, 63, 93, 16])
+		
+		elif (self.colorscheme == "dawn"):
+			self.color_printer(stdscr, char_matrix, [15, 196, 199, 93, 21, 16])
+
 	# print drop updates given a set of colors
 	def color_printer(self, stdscr, char_matrix, colors):
 		# add new head
