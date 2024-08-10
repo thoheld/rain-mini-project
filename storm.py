@@ -77,6 +77,9 @@ def generate_chars(length):
 	new_chars = []
 	for i in range(length):
 		random_int = random.randint(0x0020, 0x007E) # random char
+		# change spaces to *
+		if random_int == 32:
+			random_int += 10
 		new_chars.append(chr(random_int))
 	
 	return new_chars
