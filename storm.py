@@ -29,15 +29,16 @@ def main(stdscr):
 	# default settings
 	colorscheme = "blue"
 	speed = 0.075
-	drop_count = width//10
+	drop_count = width//6
 	# if color given
 	if (len(sys.argv) >= 2):
 		colorscheme = sys.argv[1]
-	# if drop_count given
+	# if speed given
 	if (len(sys.argv) >= 3):
-		drop_count = int(sys.argv[2])
+		speed = float(sys.argv[2])
+	# if drop_count given
 	if (len(sys.argv) >= 4):
-		speed = float(sys.argv[3])
+		drop_count = int(sys.argv[3])
 	Drop.colorscheme = colorscheme
 
 	new_drop = 14 # when to spawn new drop
@@ -118,6 +119,12 @@ class Drop:
 		
 		elif (self.colorscheme == "grey" or self.colorscheme == "gray"):
 			self.color_printer(stdscr, char_matrix, [15, 252, 245, 241, 237, 16])	
+		
+		elif (self.colorscheme == "rainbow"):
+			self.color_printer(stdscr, char_matrix, [196, 9, 226, 46, 21, 16])	
+		
+		elif (self.colorscheme == "rose"):
+			self.color_printer(stdscr, char_matrix, [15, 13, 201, 199, 89, 16])	
 	
 	# print drop updates given a set of colors
 	def color_printer(self, stdscr, char_matrix, colors):
