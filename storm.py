@@ -40,12 +40,11 @@ def main(stdscr):
 		speed = float(sys.argv[3])
 	Drop.colorscheme = colorscheme
 
-	spawn_drop = drop_count//2 # when to spawn new drop
-	new_drop = drop_count//2 # when to spawn new drop
+	new_drop = 14 # when to spawn new drop
 	while True:
 		
 		if (len(drops) < drop_count): # max number of drops
-			if new_drop == spawn_drop:
+			if (new_drop == 14):
 				drops.append(Drop())
 				new_drop = 0
 			
@@ -103,32 +102,43 @@ class Drop:
 	def update_drop(self, stdscr, char_matrix):
 		
 		if (self.colorscheme == "blue"):
-			#colors = [ 15, 45, 44, 39, 39, 38, 38, 38, 33, 33, 33, 27, 27, 27, 27, 27 ]
-			
-			# add new head
-			if (self.y < Drop.screen_height and self.y >= 0): 
-				stdscr.addch(self.y, self.x, char_matrix[self.y][self.x], curses.color_pair(15))
-			
-			# section 2 (45)
-			if (self.y-1 < Drop.screen_height and self.y-1 >= 0): 
-				stdscr.addch(self.y-1, self.x, char_matrix[self.y-1][self.x], curses.color_pair(45))
-			
-			# section 3
-			if (self.y-3 < Drop.screen_height and self.y-3 >= 0): 
-				stdscr.addch(self.y-3, self.x, char_matrix[self.y-3][self.x], curses.color_pair(33))
-			
-			# section 3
-			if (self.y-7 < Drop.screen_height and self.y-7 >= 0): 
-				stdscr.addch(self.y-7, self.x, char_matrix[self.y-7][self.x], curses.color_pair(27))
+			self.color_printer(stdscr, char_matrix, [15, 45, 33, 27, 20, 16])
 		
-			# section 4
-			if (self.y-15 < Drop.screen_height and self.y-15 >= 0): 
-				stdscr.addch(self.y-15, self.x, char_matrix[self.y-15][self.x], curses.color_pair(20))
-			
-			# erase end of tail
-			if (self.y-23 < Drop.screen_height and self.y-23 >= 0):
-				stdscr.addch(self.y-23, self.x, char_matrix[self.y-23][self.x], curses.color_pair(16))
+		elif (self.colorscheme == "red"):
+			self.color_printer(stdscr, char_matrix, [15, 196, 160, 124, 52, 16])
 		
+		elif (self.colorscheme == "gina"):
+			self.color_printer(stdscr, char_matrix, [15, 129, 92, 57, 237, 16])
+
+		elif (self.colorscheme == "orange"):
+			self.color_printer(stdscr, char_matrix, [15, 226, 214, 166, 9, 16])
+
+		elif (self.colorscheme == "green"):
+			self.color_printer(stdscr, char_matrix, [15, 46, 2, 34, 22, 16])	
+		
+		elif (self.colorscheme == "grey" or self.colorscheme == "gray"):
+			self.color_printer(stdscr, char_matrix, [15, 252, 245, 241, 237, 16])	
+	
+	# print drop updates given a set of colors
+	def color_printer(self, stdscr, char_matrix, colors):
+		# add new head
+		if (self.y < Drop.screen_height and self.y >= 0): 
+			stdscr.addch(self.y, self.x, char_matrix[self.y][self.x], curses.color_pair(colors[0]))
+		# section 2
+		if (self.y-1 < Drop.screen_height and self.y-1 >= 0): 
+			stdscr.addch(self.y-1, self.x, char_matrix[self.y-1][self.x], curses.color_pair(colors[1]))
+		# section 3
+		if (self.y-3 < Drop.screen_height and self.y-3 >= 0): 
+			stdscr.addch(self.y-3, self.x, char_matrix[self.y-3][self.x], curses.color_pair(colors[2]))
+		# section 3
+		if (self.y-7 < Drop.screen_height and self.y-7 >= 0): 
+			stdscr.addch(self.y-7, self.x, char_matrix[self.y-7][self.x], curses.color_pair(colors[3]))
+		# section 4
+		if (self.y-15 < Drop.screen_height and self.y-15 >= 0): 
+			stdscr.addch(self.y-15, self.x, char_matrix[self.y-15][self.x], curses.color_pair(colors[4]))
+		# erase end of tail
+		if (self.y-23 < Drop.screen_height and self.y-23 >= 0):
+			stdscr.addch(self.y-23, self.x, char_matrix[self.y-23][self.x], curses.color_pair(colors[5]))
 
 
 if __name__ == "__main__":
