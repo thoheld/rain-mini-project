@@ -34,7 +34,7 @@ def main(stdscr):
 		char_matrix.append(generate_chars(width))
 
 	stars = []
-	for i in range(100):
+	for i in range(250):
 		stars.append(Star())
 	
 	while True:
@@ -105,7 +105,7 @@ class Star:
 		converted_y = int((self.y * 6) + (Star.screen_height))
 		converted_x = int((self.x * 12) + (0.5 * Star.screen_width))
 		if ( (converted_y < Star.screen_height-1 and converted_y >= 1) and (converted_x < Star.screen_width-1 and converted_x >= 1) ): 
-			stdscr.addch(converted_y, converted_x, "*", curses.color_pair(color))
+			stdscr.addch(converted_y, converted_x, "+", curses.color_pair(color))
 
 
 class Comet:
@@ -131,7 +131,7 @@ class Comet:
 
 	def animate(self, stdscr, char_matrix, stars):
 		total_time = 0.0
-		for i in range(int(self.length + 28)):
+		for i in range(int(self.length + 30)):
 			self.color_printer(stdscr, char_matrix, i)
 			stdscr.refresh()
 			time.sleep(self.speed)
@@ -170,11 +170,11 @@ class Comet:
 		for i in range(8):
 			y = y - (self.direction * math.sin(math.atan(self.slope * self.direction)))
 			x = x - (self.direction * math.cos(math.atan(self.slope * self.direction)))
-		if (y < Comet.screen_height-1 and y >= 1 and x < Comet.screen_width-1 and x >= 1 and iteration - 3 < self.length):
+		if (y < Comet.screen_height-1 and y >= 1 and x < Comet.screen_width-1 and x >= 1 and iteration - 14 < self.length):
 			stdscr.addch(round(y), round(x), char_matrix[round(y)][round(x)], curses.color_pair(self.colors[3]))
 
 		# section 5
-		for i in range(8):
+		for i in range(16):
 			y = y - (self.direction * math.sin(math.atan(self.slope * self.direction)))
 			x = x - (self.direction * math.cos(math.atan(self.slope * self.direction)))
 		if (y < Comet.screen_height-1 and y >= 1 and x < Comet.screen_width-1 and x >= 1):
