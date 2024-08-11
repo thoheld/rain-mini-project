@@ -84,7 +84,8 @@ class Star:
 			# check that point falls within circle
 			if (radius <= Star.screen_height/2 and radius > Star.screen_height/3.2):
 				break
-		colors = [15, 15, 15, 15, 15, 15, 15, 229, 229, 229, 229, 159, 159]
+		colors = [247, 247, 247, 247, 247, 247, 247, 101, 101, 101, 101, 23, 23]
+		#colors = [15, 15, 15, 15, 15, 15, 15, 229, 229, 229, 229, 159, 159]
 		self.color = colors[random.randint(0, 12)]
 	
 	
