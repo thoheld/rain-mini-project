@@ -92,7 +92,7 @@ class Drop:
 	screen_height = -1
 	colorscheme = ""
 
-	# create now drop
+	# create new drop
 	def __init__(self):
 		self.y = 0
 		self.x = random.randint(1, Drop.screen_width-2)
