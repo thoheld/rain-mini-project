@@ -6,7 +6,7 @@ import math
 
 def main(stdscr):	
 
-	speed = 1.5
+	speed = .1
 	# if speed given
 	if (len(sys.argv) >= 2):
 		speed = float(sys.argv[1])
@@ -37,12 +37,19 @@ def main(stdscr):
 	for i in range(250):
 		stars.append(Star())
 	
+	comet_chance = speed/6
+	comet_chance_updated = comet_chance
 	while True:
 		for star in stars:
 			star.update(stdscr)
 	
 		stdscr.refresh()	
-		delay = Comet().animate(stdscr, char_matrix, stars)
+		delay = 0
+		if random.random() < comet_chance_updated:
+			comet_chance_updated = comet_chance
+			delay = Comet().animate(stdscr, char_matrix, stars)
+		else:
+			comet_chance_updated = comet_chance_updated + (speed/30)
 		time.sleep(speed-delay)
 	
 	return
@@ -77,7 +84,7 @@ class Star:
 			# check that point falls within circle
 			if (not (radius > Star.screen_height / 4)):
 				break
-		colors = [15, 15, 15, 15, 15, 15, 15, 229, 229, 229, 229, 123, 123]
+		colors = [15, 15, 15, 15, 15, 15, 15, 229, 229, 229, 229, 159, 159]
 		self.color = colors[random.randint(0, 12)]
 	
 	
@@ -121,9 +128,14 @@ class Comet:
 		self.slope = random.uniform(-1,1)
 		directions = [-1, 1]
 		self.direction = directions[random.randint(0, 1)]
-		self.length = random.randint(5, 10)
-		self.speed = random.uniform(0.03, 0.05)
-		self.colors = [15, 45, 33, 27, 20, 16]
+		self.length = random.randint(10, 30)
+		self.speed = random.uniform(0.005, 0.025)
+		color_options = []
+		color_options.append([15, 159, 159, 14, 51, 16])
+		color_options.append([15, 15, 195, 255, 253, 16])
+		color_options.append([15, 229, 226, 219, 207, 16])
+		color_options.append([15, 195, 193, 155, 46, 16])
+		self.colors = color_options[random.randint(0, 0)]
 	
 	def update(self):
 		self.y = self.y + (self.direction * math.sin(math.atan(self.slope * self.direction)))
