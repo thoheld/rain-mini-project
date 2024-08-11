@@ -24,6 +24,9 @@ def main(stdscr):
 	height, width = stdscr.getmaxyx()
 	Star.screen_height = height
 	Star.screen_width = width
+	Comet.screen_height = height
+	Comet.screen_width = width
+	Comet.screen_speed = speed
 	
 	# create randomized char matrix for screen
 	char_matrix = [] # [row][col]
@@ -31,15 +34,16 @@ def main(stdscr):
 		char_matrix.append(generate_chars(width))
 
 	stars = []
-	for i in range(300):
+	for i in range(100):
 		stars.append(Star())
 	
 	while True:
 		for star in stars:
 			star.update(stdscr)
 	
-		stdscr.refresh()
-		time.sleep(speed)
+		stdscr.refresh()	
+		delay = Comet().animate(stdscr, char_matrix, stars)
+		time.sleep(speed-delay)
 	
 	return
 
@@ -96,12 +100,90 @@ class Star:
 		# print
 		self.color_printer(stdscr, self.color)
 
-	# print drop updates given a set of colors
+	# print star with color
 	def color_printer(self, stdscr, color):
 		converted_y = int((self.y * 6) + (Star.screen_height))
 		converted_x = int((self.x * 12) + (0.5 * Star.screen_width))
 		if ( (converted_y < Star.screen_height-1 and converted_y >= 1) and (converted_x < Star.screen_width-1 and converted_x >= 1) ): 
 			stdscr.addch(converted_y, converted_x, "*", curses.color_pair(color))
+
+
+class Comet:
+	
+	screen_width = -1
+	screen_height = -1
+	speed_screen = -1
+
+	def __init__(self):
+		# generate random point
+		self.y = float(random.randint(1, Star.screen_height-1))
+		self.x = float(random.randint(1, Star.screen_width-1))
+		self.slope = random.uniform(-1,1)
+		directions = [-1, 1]
+		self.direction = directions[random.randint(0, 1)]
+		self.length = random.randint(5, 10)
+		self.speed = random.uniform(0.03, 0.05)
+		self.colors = [15, 45, 33, 27, 20, 16]
+	
+	def update(self):
+		self.y = self.y + (self.direction * math.sin(math.atan(self.slope * self.direction)))
+		self.x = self.x + (self.direction * math.cos(math.atan(self.slope * self.direction)))
+
+	def animate(self, stdscr, char_matrix, stars):
+		total_time = 0.0
+		for i in range(int(self.length + 28)):
+			self.color_printer(stdscr, char_matrix, i)
+			stdscr.refresh()
+			time.sleep(self.speed)
+			self.update()
+			total_time = total_time + self.speed
+			if total_time >= Comet.screen_speed:
+				total_time = 0
+				for star in stars:
+					star.update(stdscr)
+				stdscr.refresh()
+		return total_time
+
+	def color_printer(self, stdscr, char_matrix, iteration):
+		
+		# add new head
+		y = self.y
+		x = self.x
+		if (y < Comet.screen_height-1 and y >= 1 and x < Comet.screen_width-1 and x >= 1 and iteration < self.length):
+			stdscr.addch(round(y), round(x), char_matrix[round(y)][round(x)], curses.color_pair(self.colors[0]))
+	
+		# section 2
+		for i in range(2):
+			y = y - (self.direction * math.sin(math.atan(self.slope * self.direction)))
+			x = x - (self.direction * math.cos(math.atan(self.slope * self.direction)))
+		if (y < Comet.screen_height-1 and y >= 1 and x < Comet.screen_width-1 and x >= 1 and iteration - 2 < self.length):
+			stdscr.addch(round(y), round(x), char_matrix[round(y)][round(x)], curses.color_pair(self.colors[1]))
+
+		# section 3
+		for i in range(4):
+			y = y - (self.direction * math.sin(math.atan(self.slope * self.direction)))
+			x = x - (self.direction * math.cos(math.atan(self.slope * self.direction)))
+		if (y < Comet.screen_height-1 and y >= 1 and x < Comet.screen_width-1 and x >= 1 and iteration - 6 < self.length):
+			stdscr.addch(round(y), round(x), char_matrix[round(y)][round(x)], curses.color_pair(self.colors[2]))
+
+		# section 4
+		for i in range(8):
+			y = y - (self.direction * math.sin(math.atan(self.slope * self.direction)))
+			x = x - (self.direction * math.cos(math.atan(self.slope * self.direction)))
+		if (y < Comet.screen_height-1 and y >= 1 and x < Comet.screen_width-1 and x >= 1 and iteration - 3 < self.length):
+			stdscr.addch(round(y), round(x), char_matrix[round(y)][round(x)], curses.color_pair(self.colors[3]))
+
+		# section 5
+		for i in range(8):
+			y = y - (self.direction * math.sin(math.atan(self.slope * self.direction)))
+			x = x - (self.direction * math.cos(math.atan(self.slope * self.direction)))
+		if (y < Comet.screen_height-1 and y >= 1 and x < Comet.screen_width-1 and x >= 1):
+			stdscr.addch(round(y), round(x), char_matrix[round(y)][round(x)], curses.color_pair(self.colors[4]))
+		
+		# clear
+		if (y < Comet.screen_height-1 and y >= 1 and x < Comet.screen_width-1 and x >= 1):
+			stdscr.addch(round(y), round(x), char_matrix[round(y)][round(x)], curses.color_pair(self.colors[5]))
+		
 
 
 if __name__ == "__main__":
