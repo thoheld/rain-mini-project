@@ -34,7 +34,7 @@ def main(stdscr):
 		char_matrix.append(generate_chars(width))
 
 	stars = []
-	for i in range(250):
+	for i in range(1000):
 		stars.append(Star())
 	
 	comet_chance = speed/6
@@ -78,11 +78,11 @@ class Star:
 	def __init__(self):
 		while True:
 			# generate random point
-			self.x = float(random.randint((-1 * Star.screen_width), Star.screen_width))/4
-			self.y = float(random.randint((-1 * Star.screen_height), Star.screen_height))/4
+			self.x = float(random.uniform((-1 * Star.screen_width), Star.screen_width))/2
+			self.y = float(random.uniform((-1 * Star.screen_height), Star.screen_height))/2
 			radius = math.sqrt((self.x*self.x) + (self.y*self.y))
 			# check that point falls within circle
-			if (not (radius > Star.screen_height / 4)):
+			if (radius <= Star.screen_height/2 and radius > Star.screen_height/3.2):
 				break
 		colors = [15, 15, 15, 15, 15, 15, 15, 229, 229, 229, 229, 159, 159]
 		self.color = colors[random.randint(0, 12)]
@@ -109,8 +109,8 @@ class Star:
 
 	# print star with color
 	def color_printer(self, stdscr, color):
-		converted_y = int((self.y * 6) + (Star.screen_height))
-		converted_x = int((self.x * 12) + (0.5 * Star.screen_width))
+		converted_y = int((self.y * 6) + (2.9 * Star.screen_height))
+		converted_x = int((self.x * 12) + (.5 * Star.screen_width))
 		if ( (converted_y < Star.screen_height-1 and converted_y >= 1) and (converted_x < Star.screen_width-1 and converted_x >= 1) ): 
 			stdscr.addch(converted_y, converted_x, "+", curses.color_pair(color))
 
@@ -131,7 +131,7 @@ class Comet:
 		self.length = random.randint(10, 30)
 		self.speed = random.uniform(0.005, 0.025)
 		color_options = []
-		color_options.append([15, 159, 159, 14, 51, 16])
+		color_options.append([15, 15, 159, 14, 51, 16])
 		color_options.append([15, 15, 195, 255, 253, 16])
 		color_options.append([15, 229, 226, 219, 207, 16])
 		color_options.append([15, 195, 193, 155, 46, 16])
