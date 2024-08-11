@@ -142,7 +142,7 @@ class Comet:
 		color_options.append([15, 15, 195, 255, 253, 16])
 		color_options.append([15, 229, 226, 219, 207, 16])
 		color_options.append([15, 195, 193, 155, 46, 16])
-		self.colors = color_options[random.randint(0, 0)]
+		self.colors = color_options[random.randint(0, 3)]
 	
 	def update(self):
 		self.y = self.y + (self.direction * math.sin(math.atan(self.slope * self.direction)))
